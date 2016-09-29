@@ -6,7 +6,7 @@ import org.apache.spark.SparkConf
 import org.apache.hadoop.mapred.JobConf
 import org.apache.hadoop.io.Text
 import org.apache.hadoop.mapred.FileInputFormat
-import org.apache.spark.SparkConf
+import org.apache.spark.SparkConf 
 
 
 
