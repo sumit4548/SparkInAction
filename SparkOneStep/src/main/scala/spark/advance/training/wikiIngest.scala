@@ -11,8 +11,6 @@ import org.apache.hadoop.streaming.StreamXmlRecordReader
 import org.apache.hadoop.mapred.JobConf
 import scala.xml.XML
 
-
-
 object Evaluator {
   def main(args: Array[String]) {
     val conf = new SparkConf().setAppName("Language Evaluator").setMaster("local")
@@ -37,7 +35,26 @@ object Evaluator {
     })
 
     val tokenizedWikiData = rawWikiPages.flatMap(wikiText => wikiText.split("\\W+"))
-    val pertinentWikiData = tokenizedWikiData
+
+    println("CountofDocs    " + rawWikiPages.count)
+
+    println("Distinct Word Count    " + tokenizedWikiData.distinct.count)
+    
+    println("Count Approximate Distinct   " + tokenizedWikiData.countApproxDistinct(.01))
+    
+    
+    val mapValue  = tokenizedWikiData.countByValue()
+   println("count by value" + mapValue)
+   
+   val maxvalue = mapValue.maxBy(x => x._2  )
+   
+   println("maxvalue  " + maxvalue)
+    
+   
+   
+    
+
+    /*    val pertinentWikiData = tokenizedWikiData
       .map(wikiToken => wikiToken.replaceAll("[.|,|'|\"|?|)|(]", "").trim)
       .filter(wikiToken => wikiToken.length > 2)
 
@@ -46,7 +63,7 @@ object Evaluator {
       .sample(withReplacement = false, fraction = .01)
       .keyBy { wikiToken => wikiToken.length }
 
-    wikiDataSortedByLength.collect.foreach(println)
+    wikiDataSortedByLength.collect.foreach(println) */
 
   }
 }
